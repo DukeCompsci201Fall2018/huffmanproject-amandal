@@ -76,7 +76,7 @@ public class HuffProcessor {
 
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
 		HuffNode current = root;
-		while (current != null) {
+		while (true) {
 		       int bits = in.readBits(1);
 		       if (bits == -1) {
 		           throw new HuffException("bad input, no PSEUDO_EOF");
@@ -85,7 +85,7 @@ public class HuffProcessor {
 		           if (bits == 0) current = current.myLeft;
 		           else current = current.myRight;
 
-		           if (bits == 1) {
+		           if (current.myRight == null && current.myLeft == null) {
 		               if (current.myValue == PSEUDO_EOF) break;   // out of loop
 		               else {
 		                   out.writeBits(BITS_PER_WORD, current.myValue);

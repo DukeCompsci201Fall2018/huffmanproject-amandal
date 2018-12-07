@@ -26,5 +26,4 @@ public class HuffMainDecompress {
 		long diff2 = bos.bitsWritten() - bis.bitsRead();
 		System.out.printf("%d compared to %d\n",diff,diff2);
 	}
-	
 }
