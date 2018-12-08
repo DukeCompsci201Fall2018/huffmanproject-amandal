@@ -106,6 +106,7 @@ public class BitInputStream extends InputStream {
 		}
 			
 		int value = 0;
+		//
 		
 		if (numBits > available) {
 			value = (int) bitBuffer;
