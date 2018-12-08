@@ -57,18 +57,24 @@ public class HuffProcessor {
 		out.close();
 	}
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
-		while(true) {
-			int ind = in.readBits(BITS_PER_WORD);
-			if (ind == -1) break;
-			
-			String code = codings[ind];
-			out.writeBits(code.length(), Integer.parseInt(code,2));
-
+		for (int i=0; i<codings.length; i++){
+			if (codings[i] != null && codings[i].length()>0){
+				out.writeBits(codings[i].length(), Integer.parseInt(codings[i], 2));
+			}
 		}
-			String code = codings[PSEUDO_EOF];
-			out.writeBits(code.length(), Integer.parseInt(code,2));
-
 	}
+//		while(true) {
+//			int ind = in.readBits(BITS_PER_WORD);
+//			if (ind == -1) break;
+//			
+//			String code = codings[ind];
+//			out.writeBits(code.length(), Integer.parseInt(code,2));
+//
+//		}
+//			String code = codings[PSEUDO_EOF];
+//			out.writeBits(code.length(), Integer.parseInt(code,2));
+//
+//	}
 
 	private String[] makeCodingsFromTree(HuffNode root) {
 		String[] encodings = new String[ALPH_SIZE + 1];
