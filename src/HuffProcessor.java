@@ -89,20 +89,18 @@
 
 		}
 		
-		private void writeTree(HuffNode root, BitOutputStream out) {
-			if (root.myLeft == null && root.myRight == null) {
-				out.writeBits(1, 1);
-				out.writeBits(BITS_PER_WORD + 1, root.myValue);
-				return;
-			}
-			
-			out.writeBits(1, 0);
-			
-			writeTree(root.myLeft, out);
-			writeTree(root.myRight, out);
-		}
-		
-		
+//		private void writeTree(HuffNode root, BitOutputStream out) {
+//			if (root.myLeft == null && root.myRight == null) {
+//				out.writeBits(1, 1);
+//				out.writeBits(BITS_PER_WORD + 1, root.myValue);
+//				return;
+//			}
+//			
+//			out.writeBits(1, 0);
+//			
+//			writeTree(root.myLeft, out);
+//			writeTree(root.myRight, out);
+//		}
 		
 		private String[] makeCodingsFromTree(HuffNode root) {
 			String[] encodings = new String[ALPH_SIZE + 1];
@@ -113,6 +111,10 @@
 		private void codingHelper(HuffNode root, String path, String[] en) {
 			if (root.myRight == null && root.myLeft == null) {
 				en[root.myValue] = path;
+//		        if (myDebugLevel >= DEBUG_HIGH) {
+//		        	System.out.printf("encoding for %d is %s\n", root.myValue,string);
+//		        }
+
 				return;
 			}
 			codingHelper(root.myLeft, path+"0", en);
