@@ -147,8 +147,8 @@
 			store[PSEUDO_EOF] = 1;
 			
 			while (true) {
-				if (in.readBits(BITS_PER_WORD) == -1) break;
 				int ind = in.readBits(BITS_PER_WORD);
+				if (ind == -1) break;
 				store[ind] ++;
 			}
 			return store;
