@@ -24,9 +24,7 @@ public class HuffProcessor {
 	
 	public static final int DEBUG_HIGH = 4;
 	public static final int DEBUG_LOW = 1;
-	/**
-	 * 
-	 */
+	
 	public HuffProcessor() {
 		this(0);
 	}
@@ -200,12 +198,4 @@ public class HuffProcessor {
 		else {
 			int value = in.readBits(BITS_PER_WORD + 1);
 			return new HuffNode(value, 0, null, null);
-		}
-	}
-
-
-
-
-
-
-}
+		}}}
