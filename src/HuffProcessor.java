@@ -62,22 +62,21 @@
 		}
 	
 		private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
+			
 			while (true) {
-				int bits = in.readBits(BITS_PER_WORD);
 				
-				if (bits == -1)
-					break;
+					int bits = in.readBits(BITS_PER_WORD);
+					if (bits == -1) break;
 				
-				String code = codings[bits];
-				out.writeBits(code.length(), Integer.parseInt(code, 2));
+				String c = codings[bits];
+				out.writeBits(c.length(), Integer.parseInt(c, 2));
 			}
-	
-
-			String code = codings[PSEUDO_EOF];
-			out.writeBits(code.length(), Integer.parseInt(code, 2));
+			String cc = codings[PSEUDO_EOF];
+			out.writeBits(cc.length(), Integer.parseInt(cc, 2));
 		}
 		private void writeHeader(HuffNode root, BitOutputStream out) {
 			if (root.myLeft == null && root.myRight == null) {
+				
 				out.writeBits(1, 1);
 				out.writeBits(BITS_PER_WORD + 1, root.myValue);
 			}
@@ -88,20 +87,7 @@
 			}
 
 		}
-		
-//		private void writeTree(HuffNode root, BitOutputStream out) {
-//			if (root.myLeft == null && root.myRight == null) {
-//				out.writeBits(1, 1);
-//				out.writeBits(BITS_PER_WORD + 1, root.myValue);
-//				return;
-//			}
-//			
-//			out.writeBits(1, 0);
-//			
-//			writeTree(root.myLeft, out);
-//			writeTree(root.myRight, out);
-//		}
-		
+				
 		private String[] makeCodingsFromTree(HuffNode root) {
 			String[] encodings = new String[ALPH_SIZE + 1];
 			codingHelper(root, "", encodings);
