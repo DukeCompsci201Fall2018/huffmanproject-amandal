@@ -89,18 +89,18 @@
 
 		}
 		
-//		private void writeTree(HuffNode root, BitOutputStream out) {
-//			if (root.myLeft == null && root.myRight == null) {
-//				out.writeBits(1, 1);
-//				out.writeBits(BITS_PER_WORD + 1, root.myValue);
-//				return;
-//			}
-//			
-//			out.writeBits(1, 0);
-//			
-//			writeTree(root.myLeft, out);
-//			writeTree(root.myRight, out);
-//		}
+		private void writeTree(HuffNode root, BitOutputStream out) {
+			if (root.myLeft == null && root.myRight == null) {
+				out.writeBits(1, 1);
+				out.writeBits(BITS_PER_WORD + 1, root.myValue);
+				return;
+			}
+			
+			out.writeBits(1, 0);
+			
+			writeTree(root.myLeft, out);
+			writeTree(root.myRight, out);
+		}
 		
 		
 		
@@ -122,7 +122,7 @@
 		private HuffNode makeTreeFromCounts(int[] counts) {
 			PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 			
-			for (int i=0; i<counts.length; i++) {
+			for (int i=0; i<ALPH_SIZE + 1; i++) {
 				if (counts[i] > 0)
 					pq.add(new HuffNode(i, counts[i], null, null));
 			}
