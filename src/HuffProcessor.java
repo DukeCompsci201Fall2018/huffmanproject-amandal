@@ -97,9 +97,6 @@
 		private void codingHelper(HuffNode root, String path, String[] en) {
 			if (root.myRight == null && root.myLeft == null) {
 				en[root.myValue] = path;
-//		        if (myDebugLevel >= DEBUG_HIGH) {
-//		        	System.out.printf("encoding for %d is %s\n", root.myValue,string);
-//		        }
 
 				return;
 			}
@@ -111,8 +108,9 @@
 			PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 			
 			for (int i=0; i<ALPH_SIZE + 1; i++) {
-				if (counts[i] > 0)
+				if (counts[i] > 0) {
 					pq.add(new HuffNode(i, counts[i], null, null));
+				}
 			}
 			
 			while (pq.size() > 1) {
@@ -132,13 +130,13 @@
 		 */
 		private int[] readForCounts(BitInputStream in) {
 			int[] store = new int[ALPH_SIZE + 1];
-			store[PSEUDO_EOF] = 1;
 			
 			while (true) {
 				int ind = in.readBits(BITS_PER_WORD);
 				if (ind == -1) break;
 				store[ind] ++;
 			}
+			store[PSEUDO_EOF] = 1;
 			return store;
 		}
 		/**
@@ -156,8 +154,9 @@
 			if (bits != HUFF_TREE) {
 				throw new HuffException("illegal header starts with " + bits);
 			}
-			if (bits == -1) 
+			if (bits == -1) {
 				throw new HuffException("fail to read bits");
+			}
 			HuffNode root = readTreeHeader(in);
 			readCompressedBits(root, in, out);
 			out.close();
@@ -172,8 +171,9 @@
 		 */
 		private HuffNode readTreeHeader(BitInputStream in) {
 			int bits = in.readBits(1);
-			if (bits == -1) 
+			if (bits == -1) {
 				throw new HuffException("fail to read bits");
+			}
 			
 			if (bits == 0) {
 				HuffNode left = readTreeHeader(in);
@@ -197,8 +197,10 @@
 			while (true) {
 				int bits = in.readBits(1);
 				
-				if (bits == -1) 
+				if (bits == -1) {
 					throw new HuffException("Bad input, no PSEUDO_EOF");
+				}
+					
 				
 				else {
 					if (bits == 0) current = current.myLeft;
